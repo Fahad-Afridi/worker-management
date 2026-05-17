@@ -49,7 +49,7 @@ exports.WorkerService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("typeorm");
 const typeorm_2 = require("@nestjs/typeorm");
-const worker_entity_1 = require("../auth/worker.entity");
+const worker_entity_1 = require("./worker.entity");
 const bcrypt = __importStar(require("bcryptjs"));
 let WorkerService = class WorkerService {
     workerRepository;

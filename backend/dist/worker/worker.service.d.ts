@@ -1,5 +1,5 @@
 import { Repository } from "typeorm";
-import { Worker } from "../auth/worker.entity";
+import { Worker } from "./worker.entity";
 import { CreateworkerDto } from "./dto/create-worker.dto";
 import { UpdateWorkerDto } from "./dto/update-worker.dto";
 export declare class WorkerService {

@@ -51,7 +51,7 @@ const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const jwt_1 = require("@nestjs/jwt");
 const bcrypt = __importStar(require("bcryptjs"));
-const worker_entity_1 = require("./worker.entity");
+const worker_entity_1 = require("../worker/worker.entity");
 let AuthService = class AuthService {
     workerRepository;
     jwtService;

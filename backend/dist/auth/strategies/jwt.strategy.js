@@ -19,7 +19,7 @@ const passport_jwt_1 = require("passport-jwt");
 const config_1 = require("@nestjs/config");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
-const worker_entity_1 = require("../worker.entity");
+const worker_entity_1 = require("../../worker/worker.entity");
 let JwtStrategy = class JwtStrategy extends (0, passport_1.PassportStrategy)(passport_jwt_1.Strategy, 'jwt') {
     workerRepository;
     constructor(configService, workerRepository) {

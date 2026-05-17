@@ -11,7 +11,7 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const worker_controller_1 = require("./worker.controller");
 const worker_service_1 = require("./worker.service");
-const worker_entity_1 = require("../auth/worker.entity");
+const worker_entity_1 = require("./worker.entity");
 let WorkerModule = class WorkerModule {
 };
 exports.WorkerModule = WorkerModule;

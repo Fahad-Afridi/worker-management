@@ -2,7 +2,7 @@ import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { WorkerController } from "./worker.controller";
 import { WorkerService } from "./worker.service";
-import { Worker } from '../auth/worker.entity'
+import { Worker } from './worker.entity'
 
 @Module({
     imports:[

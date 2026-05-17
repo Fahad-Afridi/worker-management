@@ -4,8 +4,8 @@ import { UpdateWorkerDto } from "./dto/update-worker.dto";
 export declare class WorkerController {
     private workerservice;
     constructor(workerservice: WorkerService);
-    findAll(): Promise<import("../auth/worker.entity").Worker[]>;
-    findOne(id: number): Promise<import("../auth/worker.entity").Worker>;
+    findAll(): Promise<import("./worker.entity").Worker[]>;
+    findOne(id: number): Promise<import("./worker.entity").Worker>;
     create(dto: CreateworkerDto): Promise<{
         id: number;
         uniqueId: string;
@@ -22,7 +22,7 @@ export declare class WorkerController {
         country: string;
         joiningDate: Date;
     }>;
-    updateCountry(id: number, country: string): Promise<import("../auth/worker.entity").Worker>;
+    updateCountry(id: number, country: string): Promise<import("./worker.entity").Worker>;
     remove(id: number): Promise<{
         message: string;
     }>;
