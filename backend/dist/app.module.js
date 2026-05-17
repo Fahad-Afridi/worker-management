@@ -12,6 +12,9 @@ const typeorm_1 = require("@nestjs/typeorm");
 const config_1 = require("@nestjs/config");
 const worker_entity_1 = require("./auth/worker.entity");
 const auth_module_1 = require("./auth/auth.module");
+const core_1 = require("@nestjs/core");
+const jwt_auth_guard_1 = require("./auth/guards/jwt-auth.guard");
+const worker_module_1 = require("./worker/worker.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -36,6 +39,13 @@ exports.AppModule = AppModule = __decorate([
                 inject: [config_1.ConfigService],
             }),
             auth_module_1.AuthModule,
+            worker_module_1.WorkerModule
+        ],
+        providers: [
+            {
+                provide: core_1.APP_GUARD,
+                useClass: jwt_auth_guard_1.JwtAuthGuard,
+            },
         ],
     })
 ], AppModule);
