@@ -45,14 +45,14 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Authservice = void 0;
+exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const jwt_1 = require("@nestjs/jwt");
 const bcrypt = __importStar(require("bcryptjs"));
 const worker_entity_1 = require("./worker.entity");
-let Authservice = class Authservice {
+let AuthService = class AuthService {
     workerRepository;
     jwtService;
     constructor(workerRepository, jwtService) {
@@ -89,7 +89,7 @@ let Authservice = class Authservice {
         const worker = await this.workerRepository
             .createQueryBuilder('worker')
             .where('worker.email = :email', { email: dto.email })
-            .addSelect('woekwe.password')
+            .addSelect('worker.password')
             .getOne();
         if (!worker) {
             throw new common_1.UnauthorizedException('Invalid Credentials');
@@ -115,11 +115,11 @@ let Authservice = class Authservice {
         };
     }
 };
-exports.Authservice = Authservice;
-exports.Authservice = Authservice = __decorate([
+exports.AuthService = AuthService;
+exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(worker_entity_1.Worker)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
         jwt_1.JwtService])
-], Authservice);
+], AuthService);
 //# sourceMappingURL=auth.service.js.map

@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Worker } from './worker.entity';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
-export declare class Authservice {
+export declare class AuthService {
     private workerRepository;
     private jwtService;
     constructor(workerRepository: Repository<Worker>, jwtService: JwtService);

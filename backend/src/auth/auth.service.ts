@@ -8,7 +8,7 @@ import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 
 @Injectable()
-export class Authservice{
+export class AuthService{
 
     constructor(
         @InjectRepository(Worker)
@@ -53,7 +53,7 @@ export class Authservice{
         const worker = await this.workerRepository
         .createQueryBuilder('worker')
         .where('worker.email = :email',{email:dto.email})
-        .addSelect('woekwe.password')
+        .addSelect('worker.password')
         .getOne();
 
         if (!worker){
