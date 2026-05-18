@@ -20,6 +20,7 @@ let Worker = class Worker {
     password;
     country;
     joiningDate;
+    tasks;
     generateUniqueId() {
         this.uniqueId = uuidv4();
     }

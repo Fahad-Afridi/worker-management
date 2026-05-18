@@ -6,5 +6,6 @@ export declare class Worker {
     password: string;
     country: string;
     joiningDate: Date;
+    tasks: any;
     generateUniqueId(): void;
 }

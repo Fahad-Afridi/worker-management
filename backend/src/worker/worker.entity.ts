@@ -30,6 +30,7 @@ import {
   
     @CreateDateColumn()
     joiningDate: Date;
+      tasks: any;
   
     @BeforeInsert()
     generateUniqueId() {

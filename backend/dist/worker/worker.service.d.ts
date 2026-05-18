@@ -14,6 +14,7 @@ export declare class WorkerService {
         email: string;
         country: string;
         joiningDate: Date;
+        tasks: any;
     }>;
     update(id: number, dto: UpdateWorkerDto): Promise<{
         id: number;
@@ -22,6 +23,7 @@ export declare class WorkerService {
         email: string;
         country: string;
         joiningDate: Date;
+        tasks: any;
     }>;
     updateCountry(id: number, country: string): Promise<Worker>;
     remove(id: number): Promise<{

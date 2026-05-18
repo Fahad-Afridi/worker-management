@@ -15,6 +15,8 @@ const auth_module_1 = require("./auth/auth.module");
 const core_1 = require("@nestjs/core");
 const jwt_auth_guard_1 = require("./auth/guards/jwt-auth.guard");
 const worker_module_1 = require("./worker/worker.module");
+const task_module_1 = require("./task/task.module");
+const task_entity_1 = require("./task/task.entity");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -33,13 +35,14 @@ exports.AppModule = AppModule = __decorate([
                     username: configService.get('DB_USERNAME'),
                     password: configService.get('DB_PASSWORD'),
                     database: configService.get('DB_NAME'),
-                    entities: [worker_entity_1.Worker],
+                    entities: [worker_entity_1.Worker, task_entity_1.Task],
                     synchronize: true,
                 }),
                 inject: [config_1.ConfigService],
             }),
             auth_module_1.AuthModule,
-            worker_module_1.WorkerModule
+            worker_module_1.WorkerModule,
+            task_module_1.TaskModule,
         ],
         providers: [
             {

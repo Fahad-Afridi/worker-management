@@ -6,6 +6,8 @@ import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { WorkerModule } from './worker/worker.module';
+import { TaskModule } from './task/task.module';
+import { Task } from './task/task.entity';
 
 @Module({
   imports: [
@@ -21,13 +23,14 @@ import { WorkerModule } from './worker/worker.module';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
-        entities: [Worker],
+        entities: [Worker,Task],
         synchronize: true,
       }),
       inject: [ConfigService],
     }),
     AuthModule,
-    WorkerModule
+    WorkerModule,
+    TaskModule,
   ],
   providers:[
     {

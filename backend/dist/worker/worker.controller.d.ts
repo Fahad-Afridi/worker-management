@@ -13,6 +13,7 @@ export declare class WorkerController {
         email: string;
         country: string;
         joiningDate: Date;
+        tasks: any;
     }>;
     update(id: number, dto: UpdateWorkerDto): Promise<{
         id: number;
@@ -21,6 +22,7 @@ export declare class WorkerController {
         email: string;
         country: string;
         joiningDate: Date;
+        tasks: any;
     }>;
     updateCountry(id: number, country: string): Promise<import("./worker.entity").Worker>;
     remove(id: number): Promise<{
