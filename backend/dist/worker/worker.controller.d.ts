@@ -1,6 +1,7 @@
 import { WorkerService } from "./worker.service";
 import { CreateworkerDto } from "./dto/create-worker.dto";
 import { UpdateWorkerDto } from "./dto/update-worker.dto";
+import { Role } from "./worker.entity";
 export declare class WorkerController {
     private workerservice;
     constructor(workerservice: WorkerService);
@@ -12,8 +13,9 @@ export declare class WorkerController {
         name: string;
         email: string;
         country: string;
+        role: Role;
         joiningDate: Date;
-        tasks: any;
+        task: import("../task/task.entity").Task[];
     }>;
     update(id: number, dto: UpdateWorkerDto): Promise<{
         id: number;
@@ -21,8 +23,9 @@ export declare class WorkerController {
         name: string;
         email: string;
         country: string;
+        role: Role;
         joiningDate: Date;
-        tasks: any;
+        task: import("../task/task.entity").Task[];
     }>;
     updateCountry(id: number, country: string): Promise<import("./worker.entity").Worker>;
     remove(id: number): Promise<{

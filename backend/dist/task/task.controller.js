@@ -17,6 +17,8 @@ const common_1 = require("@nestjs/common");
 const task_service_1 = require("./task.service");
 const create_task_dto_1 = require("./dto/create-task.dto");
 const update_task_dto_1 = require("./dto/update-task.dto");
+const roles_decorator_1 = require("../auth/decorator/roles.decorator");
+const worker_entity_1 = require("../worker/worker.entity");
 let TaskController = class TaskController {
     taskService;
     constructor(taskService) {
@@ -40,6 +42,7 @@ let TaskController = class TaskController {
 };
 exports.TaskController = TaskController;
 __decorate([
+    (0, roles_decorator_1.Roles)(worker_entity_1.Role.ADMIN),
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -69,6 +72,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], TaskController.prototype, "update", null);
 __decorate([
+    (0, roles_decorator_1.Roles)(worker_entity_1.Role.ADMIN),
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),

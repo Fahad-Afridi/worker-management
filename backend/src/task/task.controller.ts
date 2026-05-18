@@ -2,11 +2,14 @@ import { Controller,Get, Post, Patch, Delete, Body, Param, ParseIntPipe } from "
 import { TaskService } from "./task.service";
 import { CreateTaskDto } from "./dto/create-task.dto";
 import { UpdateTaskDto } from "./dto/update-task.dto";
+import { Roles } from "src/auth/decorator/roles.decorator";
+import { Role } from "src/worker/worker.entity";
 
 @Controller('task')
 export class TaskController{
     constructor(private taskService : TaskService){}
 
+    @Roles(Role.ADMIN)
     @Post()
     create (@Body() dto: CreateTaskDto){
         return this.taskService.create(dto);
@@ -27,6 +30,7 @@ export class TaskController{
         return this.taskService.update(id,dto);
     }
 
+    @Roles(Role.ADMIN)
     @Delete(':id')
     remove(@Param('id',ParseIntPipe)id:number){
         return this.taskService.remove(id);

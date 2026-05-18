@@ -4,10 +4,11 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Worker } from './worker/worker.entity';
 import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
-import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
+import { JwtAuthGuard } from './auth/guards/jwt-auth.guards';
 import { WorkerModule } from './worker/worker.module';
 import { TaskModule } from './task/task.module';
 import { Task } from './task/task.entity';
+import { RolesGuard } from './auth/guards/roles.guards';
 
 @Module({
   imports: [
@@ -36,6 +37,10 @@ import { Task } from './task/task.entity';
     {
       provide : APP_GUARD,
       useClass : JwtAuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass:RolesGuard,
     },
   ],
 })

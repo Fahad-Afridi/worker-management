@@ -1,3 +1,8 @@
+import { Task } from "../task/task.entity";
+export declare enum Role {
+    WORKER = "worker",
+    ADMIN = "admin"
+}
 export declare class Worker {
     id: number;
     uniqueId: string;
@@ -5,7 +10,8 @@ export declare class Worker {
     email: string;
     password: string;
     country: string;
+    role: Role;
     joiningDate: Date;
-    tasks: any;
+    task: Task[];
     generateUniqueId(): void;
 }

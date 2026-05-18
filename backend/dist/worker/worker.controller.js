@@ -17,6 +17,8 @@ const common_1 = require("@nestjs/common");
 const worker_service_1 = require("./worker.service");
 const create_worker_dto_1 = require("./dto/create-worker.dto");
 const update_worker_dto_1 = require("./dto/update-worker.dto");
+const roles_decorator_1 = require("../auth/decorator/roles.decorator");
+const worker_entity_1 = require("./worker.entity");
 let WorkerController = class WorkerController {
     workerservice;
     constructor(workerservice) {
@@ -43,12 +45,14 @@ let WorkerController = class WorkerController {
 };
 exports.WorkerController = WorkerController;
 __decorate([
+    (0, roles_decorator_1.Roles)(worker_entity_1.Role.ADMIN),
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], WorkerController.prototype, "findAll", null);
 __decorate([
+    (0, roles_decorator_1.Roles)(worker_entity_1.Role.ADMIN),
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
@@ -56,6 +60,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], WorkerController.prototype, "findOne", null);
 __decorate([
+    (0, roles_decorator_1.Roles)(worker_entity_1.Role.ADMIN),
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -63,6 +68,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], WorkerController.prototype, "create", null);
 __decorate([
+    (0, roles_decorator_1.Roles)(worker_entity_1.Role.ADMIN),
     (0, common_1.Put)(':id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __param(1, (0, common_1.Body)()),
@@ -71,6 +77,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], WorkerController.prototype, "update", null);
 __decorate([
+    (0, roles_decorator_1.Roles)(worker_entity_1.Role.ADMIN),
     (0, common_1.Patch)(':id/country'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __param(1, (0, common_1.Body)('country')),
@@ -79,6 +86,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], WorkerController.prototype, "updateCountry", null);
 __decorate([
+    (0, roles_decorator_1.Roles)(worker_entity_1.Role.ADMIN),
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),

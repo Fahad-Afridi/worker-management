@@ -9,9 +9,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Worker = void 0;
+exports.Worker = exports.Role = void 0;
+const task_entity_1 = require("../task/task.entity");
 const typeorm_1 = require("typeorm");
 const { v4: uuidv4 } = require('uuid');
+var Role;
+(function (Role) {
+    Role["WORKER"] = "worker";
+    Role["ADMIN"] = "admin";
+})(Role || (exports.Role = Role = {}));
 let Worker = class Worker {
     id;
     uniqueId;
@@ -19,8 +25,9 @@ let Worker = class Worker {
     email;
     password;
     country;
+    role;
     joiningDate;
-    tasks;
+    task;
     generateUniqueId() {
         this.uniqueId = uuidv4();
     }
@@ -51,9 +58,21 @@ __decorate([
     __metadata("design:type", String)
 ], Worker.prototype, "country", void 0);
 __decorate([
+    (0, typeorm_1.Column)({
+        type: 'enum',
+        enum: Role,
+        default: Role.WORKER,
+    }),
+    __metadata("design:type", String)
+], Worker.prototype, "role", void 0);
+__decorate([
     (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)
 ], Worker.prototype, "joiningDate", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => task_entity_1.Task, (task) => task.worker),
+    __metadata("design:type", Array)
+], Worker.prototype, "task", void 0);
 __decorate([
     (0, typeorm_1.BeforeInsert)(),
     __metadata("design:type", Function),

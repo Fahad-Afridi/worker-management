@@ -15,8 +15,9 @@ export declare class WorkerService {
         name: string;
         email: string;
         country: string;
+        role: import("./worker.entity").Role;
         joiningDate: Date;
-        tasks: any;
+        task: import("../task/task.entity").Task[];
     }>;
     update(id: number, dto: UpdateWorkerDto): Promise<{
         id: number;
@@ -24,8 +25,9 @@ export declare class WorkerService {
         name: string;
         email: string;
         country: string;
+        role: import("./worker.entity").Role;
         joiningDate: Date;
-        tasks: any;
+        task: import("../task/task.entity").Task[];
     }>;
     updateCountry(id: number, country: string): Promise<Worker>;
     remove(id: number): Promise<{

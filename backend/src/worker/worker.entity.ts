@@ -1,12 +1,18 @@
+import { Task } from 'src/task/task.entity';
 import {
     Entity,
     PrimaryGeneratedColumn,
     Column,
     CreateDateColumn,
     BeforeInsert,
+    OneToMany,
   } from 'typeorm';
   
   const { v4: uuidv4 } = require('uuid');
+  export enum Role{
+    WORKER = 'worker',
+    ADMIN = 'admin',
+  }
   
   @Entity('workers')
   export class Worker {
@@ -27,10 +33,19 @@ import {
   
     @Column()
     country: string;
+
+    @Column({
+      type: 'enum',
+      enum: Role,
+      default: Role.WORKER,
+    })
+    role: Role;
   
     @CreateDateColumn()
     joiningDate: Date;
-      tasks: any;
+
+    @OneToMany(()=>Task, (task)=>task.worker)
+    task: Task[];
   
     @BeforeInsert()
     generateUniqueId() {

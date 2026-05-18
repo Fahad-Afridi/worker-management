@@ -48,7 +48,7 @@ __decorate([
     __metadata("design:type", String)
 ], Task.prototype, "status", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => worker_entity_1.Worker, (worker) => worker.tasks, {
+    (0, typeorm_1.ManyToOne)(() => worker_entity_1.Worker, (worker) => worker.task, {
         onDelete: 'CASCADE',
     }),
     (0, typeorm_1.JoinColumn)({ name: 'workerId' }),

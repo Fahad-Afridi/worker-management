@@ -32,7 +32,7 @@ export class Task{
     })
     status: TaskStatus;
 
-    @ManyToOne(()=> Worker,(worker)=>worker.tasks,{
+    @ManyToOne(()=> Worker,(worker)=>worker.task,{
         onDelete: 'CASCADE',
     })
 
