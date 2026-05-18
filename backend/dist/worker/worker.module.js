@@ -12,6 +12,7 @@ const typeorm_1 = require("@nestjs/typeorm");
 const worker_controller_1 = require("./worker.controller");
 const worker_service_1 = require("./worker.service");
 const worker_entity_1 = require("./worker.entity");
+const mailer_module_1 = require("../mailer/mailer.module");
 let WorkerModule = class WorkerModule {
 };
 exports.WorkerModule = WorkerModule;
@@ -19,6 +20,7 @@ exports.WorkerModule = WorkerModule = __decorate([
     (0, common_1.Module)({
         imports: [
             typeorm_1.TypeOrmModule.forFeature([worker_entity_1.Worker]),
+            mailer_module_1.MailerModule,
         ],
         controllers: [worker_controller_1.WorkerController],
         providers: [worker_service_1.WorkerService],

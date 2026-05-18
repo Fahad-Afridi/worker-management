@@ -2,9 +2,11 @@ import { Repository } from "typeorm";
 import { Worker } from "./worker.entity";
 import { CreateworkerDto } from "./dto/create-worker.dto";
 import { UpdateWorkerDto } from "./dto/update-worker.dto";
+import { EmailService } from "../mailer/mailer.service";
 export declare class WorkerService {
     private workerRepository;
-    constructor(workerRepository: Repository<Worker>);
+    private emailService;
+    constructor(workerRepository: Repository<Worker>, emailService: EmailService);
     findAll(): Promise<Worker[]>;
     findOne(id: number): Promise<Worker>;
     create(dto: CreateworkerDto): Promise<{

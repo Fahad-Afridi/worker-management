@@ -5,13 +5,15 @@ import { Worker } from "./worker.entity";
 import { CreateworkerDto } from "./dto/create-worker.dto";
 import { UpdateWorkerDto } from "./dto/update-worker.dto";
 import * as bcrypt from 'bcryptjs';
-import { threadId } from "worker_threads";
+import { EmailService } from "src/mailer/mailer.service";
+
 
 @Injectable()
 export class WorkerService{
     constructor(
         @InjectRepository(Worker)
         private workerRepository: Repository<Worker>,
+        private emailService: EmailService,
     ){}
 
     async findAll(){
@@ -44,6 +46,8 @@ export class WorkerService{
         });
 
         await this . workerRepository.save(worker);
+
+        await this.emailService.sendwelcomeEmail(worker.name, worker.email);
 
         const{password, ...result } = worker;
         return result;

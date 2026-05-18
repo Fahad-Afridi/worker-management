@@ -51,10 +51,13 @@ const typeorm_1 = require("typeorm");
 const typeorm_2 = require("@nestjs/typeorm");
 const worker_entity_1 = require("./worker.entity");
 const bcrypt = __importStar(require("bcryptjs"));
+const mailer_service_1 = require("../mailer/mailer.service");
 let WorkerService = class WorkerService {
     workerRepository;
-    constructor(workerRepository) {
+    emailService;
+    constructor(workerRepository, emailService) {
         this.workerRepository = workerRepository;
+        this.emailService = emailService;
     }
     async findAll() {
         return this.workerRepository.find();
@@ -81,6 +84,7 @@ let WorkerService = class WorkerService {
             password: hashedPassword,
         });
         await this.workerRepository.save(worker);
+        await this.emailService.sendwelcomeEmail(worker.name, worker.email);
         const { password, ...result } = worker;
         return result;
     }
@@ -110,6 +114,7 @@ exports.WorkerService = WorkerService;
 exports.WorkerService = WorkerService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_2.InjectRepository)(worker_entity_1.Worker)),
-    __metadata("design:paramtypes", [typeorm_1.Repository])
+    __metadata("design:paramtypes", [typeorm_1.Repository,
+        mailer_service_1.EmailService])
 ], WorkerService);
 //# sourceMappingURL=worker.service.js.map
