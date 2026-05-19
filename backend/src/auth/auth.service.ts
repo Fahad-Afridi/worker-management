@@ -4,13 +4,13 @@ import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
 import * as crypto from 'crypto';
-import { Worker } from '../worker/worker.entity';
+import { Role, Worker } from '../worker/worker.entity';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
 import { EmailService } from 'src/mailer/mailer.service';
 import { ResetPasswordDto } from './dto/reset-password.dto';
-
+import { ConfigService } from '@nestjs/config';
 @Injectable()
 export class AuthService{
 
@@ -18,7 +18,8 @@ export class AuthService{
         @InjectRepository(Worker)
         private workerRepository : Repository<Worker>,
         private jwtService : JwtService,
-        private eamilService: EmailService,
+        private emailService: EmailService,
+        private configService: ConfigService,
     ){}
 
     async register (dto : RegisterDto){
@@ -71,12 +72,33 @@ export class AuthService{
         }
         const payload = {
             sub : worker.id,
-            email: worker.email
+            email: worker.email,
+            role:worker.role,
         };
-        const token = this.jwtService.sign(payload);
+
+       // const token = this.jwtService.sign(payload);
+
+      /* const access_token = this.jwtService.sign(payload, {
+        secret: process.env.JWT_SECRET,
+        expiresIn: process.env.JWT_EXPIRES_IN,
+      });
+
+       const refresh_token = this.jwtService.sign(payload,{
+        secret: process.env.JWT_SECRET,
+        expiresIn:'7d'
+       });
+       */
+      const access_token = this.jwtService.sign(payload);
+
+      const refresh_token = this.jwtService.sign(payload,{
+        secret: this.configService.get('JWT_REFRESH_SECRET'),
+        expiresIn:'7d',
+      });
+
 
         return {
-            access_token : token,
+            access_token,
+            refresh_token,
             worker:{
                 id : worker.id,
                 uniqueId: worker.uniqueId,
@@ -102,7 +124,7 @@ export class AuthService{
         worker.resetTokenExpiry = resetTokenExpiry;
         await this.workerRepository.save(worker);
 
-        await this.eamilService.sendPasswordResetEmail(
+        await this.emailService.sendPasswordResetEmail(
             worker.name,
             worker.email,
             resetToken,

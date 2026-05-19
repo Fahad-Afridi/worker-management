@@ -26,7 +26,7 @@ export class WorkerService{
         });
 
         if(!worker){
-            throw new NotFoundException('Worker with is ${id} not found ')
+            throw new NotFoundException(`Worker with is ${id} not found `)
         }
         return worker;
     }
@@ -50,7 +50,8 @@ export class WorkerService{
         await this.emailService.sendwelcomeEmail(worker.name, worker.email);
 
         const{password, ...result } = worker;
-        return result;
+        return result ;
+
     }
 
     async update (id: number, dto: UpdateWorkerDto){
@@ -76,7 +77,7 @@ export class WorkerService{
     async remove (id: number){
         const worker = await this.findOne(id);
         await this. workerRepository.remove(worker);
-        return { message: 'Worker $ {worker.name} deleted successfully'};
+        return { message: `Worker ${worker.name} deleted successfully`};
         }
 
 }

@@ -67,7 +67,7 @@ let WorkerService = class WorkerService {
             where: { id },
         });
         if (!worker) {
-            throw new common_1.NotFoundException('Worker with is ${id} not found ');
+            throw new common_1.NotFoundException(`Worker with is ${id} not found `);
         }
         return worker;
     }
@@ -107,7 +107,7 @@ let WorkerService = class WorkerService {
     async remove(id) {
         const worker = await this.findOne(id);
         await this.workerRepository.remove(worker);
-        return { message: 'Worker $ {worker.name} deleted successfully' };
+        return { message: `Worker ${worker.name} deleted successfully` };
     }
 };
 exports.WorkerService = WorkerService;
