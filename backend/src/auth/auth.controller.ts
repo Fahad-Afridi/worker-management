@@ -5,6 +5,8 @@ import { LoginDto } from "./dto/login.dto";
 import { Public } from "./decorator/public.decorator";
 import { Role } from "src/worker/worker.entity";
 import { Roles } from "./decorator/roles.decorator";
+import { ForgotPasswordDto } from "./dto/forgot-password.dto";
+import { ResetPasswordDto } from "./dto/reset-password.dto";
 
 @Controller('auth')
 export class AuthController{
@@ -20,5 +22,17 @@ export class AuthController{
     @Post('login')
     login(@Body() dto: LoginDto){
         return this.authService.login(dto);
+    }
+
+    @Public()
+    @Post('forgot-password')
+    forgotPassword(@Body() dto: ForgotPasswordDto){
+        return this.authService.forgetPassword(dto);
+    }
+
+    @Public()
+    @Post('reset-password')
+    resetPassword(@Body() dto: ResetPasswordDto){
+        return this.authService.resetPassword(dto);
     }
 }

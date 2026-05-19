@@ -51,13 +51,17 @@ const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const jwt_1 = require("@nestjs/jwt");
 const bcrypt = __importStar(require("bcryptjs"));
+const crypto = __importStar(require("crypto"));
 const worker_entity_1 = require("../worker/worker.entity");
+const mailer_service_1 = require("../mailer/mailer.service");
 let AuthService = class AuthService {
     workerRepository;
     jwtService;
-    constructor(workerRepository, jwtService) {
+    eamilService;
+    constructor(workerRepository, jwtService, eamilService) {
         this.workerRepository = workerRepository;
         this.jwtService = jwtService;
+        this.eamilService = eamilService;
     }
     async register(dto) {
         const existing = await this.workerRepository.findOne({
@@ -114,12 +118,57 @@ let AuthService = class AuthService {
             },
         };
     }
+    async forgetPassword(dto) {
+        const worker = await this.workerRepository.findOne({
+            where: { email: dto.email },
+        });
+        if (!worker) {
+            return {
+                message: 'If this eamil exists you will receive a reset link',
+            };
+        }
+        const resetToken = crypto.randomBytes(32).toString('hex');
+        const resetTokenExpiry = new Date(Date.now() + 15 * 60 * 1000);
+        worker.resetToken = resetToken;
+        worker.resetTokenExpiry = resetTokenExpiry;
+        await this.workerRepository.save(worker);
+        await this.eamilService.sendPasswordResetEmail(worker.name, worker.email, resetToken);
+        return {
+            message: 'If this eamil exists you will recive a reset link',
+        };
+    }
+    async resetPassword(dto) {
+        const worker = await this.workerRepository
+            .createQueryBuilder('worker')
+            .where('worker.resetToken = :token', { token: dto.token })
+            .addSelect('worker.resetToken')
+            .getOne();
+        if (!worker) {
+            throw new common_1.BadRequestException('Invalid reset token');
+        }
+        const now = new Date();
+        if (!worker.resetTokenExpiry || worker.resetTokenExpiry < now) {
+            worker.resetToken = null;
+            worker.resetTokenExpiry = null;
+            await this.workerRepository.save(worker);
+            throw new common_1.BadRequestException('Reset token has expired');
+        }
+        const hashedPassword = await bcrypt.hash(dto.newPassword, 12);
+        worker.password = hashedPassword;
+        worker.resetToken = null;
+        worker.resetTokenExpiry = null;
+        await this.workerRepository.save(worker);
+        return {
+            message: 'Password reset successful. You can now login.',
+        };
+    }
 };
 exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(worker_entity_1.Worker)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
-        jwt_1.JwtService])
+        jwt_1.JwtService,
+        mailer_service_1.EmailService])
 ], AuthService);
 //# sourceMappingURL=auth.service.js.map

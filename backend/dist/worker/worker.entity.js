@@ -26,6 +26,8 @@ let Worker = class Worker {
     password;
     country;
     role;
+    resetToken;
+    resetTokenExpiry;
     joiningDate;
     task;
     generateUniqueId() {
@@ -65,6 +67,14 @@ __decorate([
     }),
     __metadata("design:type", String)
 ], Worker.prototype, "role", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'text', nullable: true, select: false }),
+    __metadata("design:type", Object)
+], Worker.prototype, "resetToken", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'timestamp', nullable: true }),
+    __metadata("design:type", Object)
+], Worker.prototype, "resetTokenExpiry", void 0);
 __decorate([
     (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)

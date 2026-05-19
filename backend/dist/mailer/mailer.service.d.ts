@@ -4,4 +4,5 @@ export declare class EmailService {
     constructor();
     private initializeTransporter;
     sendwelcomeEmail(name: string, eamil: string): Promise<string | false>;
+    sendPasswordResetEmail(name: string, email: string, token: string): Promise<string | false>;
 }

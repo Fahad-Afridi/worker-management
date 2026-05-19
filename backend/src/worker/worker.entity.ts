@@ -9,6 +9,7 @@ import {
   } from 'typeorm';
   
   const { v4: uuidv4 } = require('uuid');
+
   export enum Role{
     WORKER = 'worker',
     ADMIN = 'admin',
@@ -40,6 +41,12 @@ import {
       default: Role.WORKER,
     })
     role: Role;
+
+    @Column({type:'text', nullable: true, select: false})
+    resetToken: string | null;
+
+    @Column({type:'timestamp' , nullable: true})
+    resetTokenExpiry: Date | null;
   
     @CreateDateColumn()
     joiningDate: Date;

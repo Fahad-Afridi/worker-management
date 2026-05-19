@@ -11,6 +11,8 @@ export declare class Worker {
     password: string;
     country: string;
     role: Role;
+    resetToken: string | null;
+    resetTokenExpiry: Date | null;
     joiningDate: Date;
     task: Task[];
     generateUniqueId(): void;

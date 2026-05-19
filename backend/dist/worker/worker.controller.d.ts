@@ -14,6 +14,8 @@ export declare class WorkerController {
         email: string;
         country: string;
         role: Role;
+        resetToken: string | null;
+        resetTokenExpiry: Date | null;
         joiningDate: Date;
         task: import("../task/task.entity").Task[];
     }>;
@@ -24,6 +26,8 @@ export declare class WorkerController {
         email: string;
         country: string;
         role: Role;
+        resetToken: string | null;
+        resetTokenExpiry: Date | null;
         joiningDate: Date;
         task: import("../task/task.entity").Task[];
     }>;
