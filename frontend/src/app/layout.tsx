@@ -1,20 +1,16 @@
-import type { Metadata } from "next";
-import { AuthProvider } from "@/context/AuthContext";
+import type { Metadata } from 'next';
 import './globals.css';
+import { AuthProvider } from '@/context/AuthContext';
 
 export const metadata: Metadata = {
-  title: "Worker management System",
-  description: "Manage workers and tasks efficiently",
+  title: 'Worker Management System',
+  description: 'Manage workers and tasks efficiently',
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body>
+      <body className="bg-gray-50 text-gray-900 min-h-screen flex flex-col">
         <AuthProvider>
           {children}
         </AuthProvider>

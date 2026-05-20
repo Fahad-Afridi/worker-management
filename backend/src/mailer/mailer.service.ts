@@ -47,7 +47,7 @@ export class EmailService{
     }
 
     async sendPasswordResetEmail(name: string, email: string, token: string){
-        const resetUrl = `http://localhost:3001/reset-password=${token}`;// ${token} placeholder that expect value from valiable - token
+        const resetUrl = `http://localhost:4000/reset-password?token=${token}`;// ${token} placeholder that expect value from valiable - token
         
         const info = await this.transporter.sendMail({
             from: '"Worker Management" <no-reply@worker.com',

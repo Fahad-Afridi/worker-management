@@ -83,7 +83,7 @@ let EmailService = EmailService_1 = class EmailService {
         return nodemailer.getTestMessageUrl(info);
     }
     async sendPasswordResetEmail(name, email, token) {
-        const resetUrl = `http://localhost:3001/reset-password=${token}`;
+        const resetUrl = `http://localhost:4000/reset-password?token=${token}`;
         const info = await this.transporter.sendMail({
             from: '"Worker Management" <no-reply@worker.com',
             to: email,

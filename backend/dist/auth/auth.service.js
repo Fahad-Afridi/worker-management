@@ -54,14 +54,17 @@ const bcrypt = __importStar(require("bcryptjs"));
 const crypto = __importStar(require("crypto"));
 const worker_entity_1 = require("../worker/worker.entity");
 const mailer_service_1 = require("../mailer/mailer.service");
+const config_1 = require("@nestjs/config");
 let AuthService = class AuthService {
     workerRepository;
     jwtService;
-    eamilService;
-    constructor(workerRepository, jwtService, eamilService) {
+    emailService;
+    configService;
+    constructor(workerRepository, jwtService, emailService, configService) {
         this.workerRepository = workerRepository;
         this.jwtService = jwtService;
-        this.eamilService = eamilService;
+        this.emailService = emailService;
+        this.configService = configService;
     }
     async register(dto) {
         const existing = await this.workerRepository.findOne({
@@ -104,17 +107,24 @@ let AuthService = class AuthService {
         }
         const payload = {
             sub: worker.id,
-            email: worker.email
+            email: worker.email,
+            role: worker.role,
         };
-        const token = this.jwtService.sign(payload);
+        const access_token = this.jwtService.sign(payload);
+        const refresh_token = this.jwtService.sign(payload, {
+            secret: this.configService.get('JWT_REFRESH_SECRET'),
+            expiresIn: '7d',
+        });
         return {
-            access_token: token,
+            access_token,
+            refresh_token,
             worker: {
                 id: worker.id,
                 uniqueId: worker.uniqueId,
                 name: worker.name,
                 email: worker.email,
                 country: worker.country,
+                role: worker.role,
             },
         };
     }
@@ -132,7 +142,7 @@ let AuthService = class AuthService {
         worker.resetToken = resetToken;
         worker.resetTokenExpiry = resetTokenExpiry;
         await this.workerRepository.save(worker);
-        await this.eamilService.sendPasswordResetEmail(worker.name, worker.email, resetToken);
+        await this.emailService.sendPasswordResetEmail(worker.name, worker.email, resetToken);
         return {
             message: 'If this eamil exists you will recive a reset link',
         };
@@ -169,6 +179,7 @@ exports.AuthService = AuthService = __decorate([
     __param(0, (0, typeorm_1.InjectRepository)(worker_entity_1.Worker)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
         jwt_1.JwtService,
-        mailer_service_1.EmailService])
+        mailer_service_1.EmailService,
+        config_1.ConfigService])
 ], AuthService);
 //# sourceMappingURL=auth.service.js.map

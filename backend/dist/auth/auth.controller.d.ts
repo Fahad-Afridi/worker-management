@@ -1,6 +1,7 @@
 import { AuthService } from "./auth.service";
 import { RegisterDto } from "./dto/register.dto";
 import { LoginDto } from "./dto/login.dto";
+import { Role } from "../worker/worker.entity";
 import { ForgotPasswordDto } from "./dto/forgot-password.dto";
 import { ResetPasswordDto } from "./dto/reset-password.dto";
 export declare class AuthController {
@@ -18,12 +19,14 @@ export declare class AuthController {
     }>;
     login(dto: LoginDto): Promise<{
         access_token: string;
+        refresh_token: string;
         worker: {
             id: number;
             uniqueId: string;
             name: string;
             email: string;
             country: string;
+            role: Role;
         };
     }>;
     forgotPassword(dto: ForgotPasswordDto): Promise<{

@@ -105,6 +105,7 @@ export class AuthService{
                 name : worker.name,
                 email: worker.email,
                 country : worker.country,
+                role: worker.role,
             },
         };
     }
